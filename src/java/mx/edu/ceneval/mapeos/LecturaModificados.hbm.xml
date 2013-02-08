@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 6/02/2013 11:28:25 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="mx.edu.ceneval.mapeos.LecturaModificados" table="lectura_modificados" catalog="replicasiipo">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="tipoExa" type="string">
+            <column name="tipo_exa" length="20" />
+        </property>
+        <property name="opcApli" type="string">
+            <column name="opc_apli" length="2" />
+        </property>
+        <property name="anoVer" type="string">
+            <column name="ano_ver" length="4" />
+        </property>
+        <property name="tipoReg" type="string">
+            <column name="tipo_reg" length="1" />
+        </property>
+        <property name="tipoResp" type="string">
+            <column name="tipo_resp" length="1" />
+        </property>
+        <property name="cveBpm" type="string">
+            <column name="cve_bpm" length="18" />
+        </property>
+        <property name="apli" type="string">
+            <column name="apli" length="9" />
+        </property>
+        <property name="fechaApli" type="date">
+            <column name="fecha_apli" length="10" />
+        </property>
+        <property name="cveInst" type="string">
+            <column name="cve_inst" length="9" />
+        </property>
+        <property name="identifica" type="string">
+            <column name="identifica" length="8" />
+        </property>
+        <property name="descIdent" type="string">
+            <column name="desc_ident" length="65535" />
+        </property>
+        <property name="lposImg" type="string">
+            <column name="lpos_img" length="57" />
+        </property>
+        <property name="folio" type="string">
+            <column name="folio" length="9" />
+        </property>
+        <property name="matricula" type="string">
+            <column name="matricula" length="12" />
+        </property>
+        <property name="apePat" type="string">
+            <column name="ape_pat" length="40" />
+        </property>
+        <property name="apeMat" type="string">
+            <column name="ape_mat" length="40" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" />
+        </property>
+        <property name="diaNac" type="string">
+            <column name="dia_nac" length="2" />
+        </property>
+        <property name="mesNac" type="string">
+            <column name="mes_nac" length="2" />
+        </property>
+        <property name="a&#241;oNac" type="string">
+            <column name="a&#241;o_nac" length="2" />
+        </property>
+        <property name="sexo" type="string">
+            <column name="sexo" length="1" />
+        </property>
+        <property name="liMad" type="string">
+            <column name="li_mad" length="1" />
+        </property>
+        <property name="liPad" type="string">
+            <column name="li_pad" length="1" />
+        </property>
+        <property name="edoProc" type="string">
+            <column name="edo_proc" length="2" />
+        </property>
+        <property name="nomProc" type="string">
+            <column name="nom_proc" length="65535" />
+        </property>
+        <property name="ciuProc" type="string">
+            <column name="ciu_proc" length="50" />
+        </property>
+        <property name="cveProc" type="string">
+            <column name="cve_proc" length="6" />
+        </property>
+        <property name="anoBac" type="string">
+            <column name="ano_bac" length="1" />
+        </property>
+        <property name="regProc" type="string">
+            <column name="reg_proc" length="1" />
+        </property>
+        <property name="modBac" type="string">
+            <column name="mod_bac" length="1" />
+        </property>
+        <property name="promBac" type="string">
+            <column name="prom_bac" length="1" />
+        </property>
+        <property name="becBdac" type="string">
+            <column name="bec_bdac" length="1" />
+        </property>
+        <property name="becBne" type="string">
+            <column name="bec_bne" length="1" />
+        </property>
+        <property name="becBhd" type="string">
+            <column name="bec_bhd" length="1" />
+        </property>
+        <property name="hrsTrab" type="string">
+            <column name="hrs_trab" length="1" />
+        </property>
+        <property name="estAlca" type="string">
+            <column name="est_alca" length="1" />
+        </property>
+        <property name="noUni" type="string">
+            <column name="no_uni" length="1" />
+        </property>
+        <property name="siUni" type="string">
+            <column name="si_uni" length="1" />
+        </property>
+        <property name="siPosg" type="string">
+            <column name="si_posg" length="1" />
+        </property>
+        <property name="desIdea" type="string">
+            <column name="des_idea" length="1" />
+        </property>
+        <property name="desDesa" type="string">
+            <column name="des_desa" length="1" />
+        </property>
+        <property name="desAten" type="string">
+            <column name="des_aten" length="1" />
+        </property>
+        <property name="desEsme" type="string">
+            <column name="des_esme" length="1" />
+        </property>
+        <property name="desMeta" type="string">
+            <column name="des_meta" length="1" />
+        </property>
+        <property name="desDist" type="string">
+            <column name="des_dist" length="1" />
+        </property>
+        <property name="desTerm" type="string">
+            <column name="des_term" length="1" />
+        </property>
+        <property name="desDuro" type="string">
+            <column name="des_duro" length="1" />
+        </property>
+        <property name="habEime" type="string">
+            <column name="hab_eime" length="1" />
+        </property>
+        <property name="cuaPesc" type="string">
+            <column name="cua_pesc" length="1" />
+        </property>
+        <property name="conteni" type="string">
+            <column name="conteni" length="1" />
+        </property>
+        <property name="redaccion" type="string">
+            <column name="redaccion" length="1" />
+        </property>
+        <property name="organiza" type="string">
+            <column name="organiza" length="1" />
+        </property>
+        <property name="ortogra" type="string">
+            <column name="ortogra" length="1" />
+        </property>
+        <property name="presenta" type="string">
+            <column name="presenta" length="1" />
+        </property>
+        <property name="habArg" type="string">
+            <column name="hab_arg" length="1" />
+        </property>
+        <property name="habRep" type="string">
+            <column name="hab_rep" length="1" />
+        </property>
+        <property name="habHis" type="string">
+            <column name="hab_his" length="1" />
+        </property>
+        <property name="habCar" type="string">
+            <column name="hab_car" length="1" />
+        </property>
+        <property name="freAide" type="string">
+            <column name="fre_aide" length="1" />
+        </property>
+        <property name="freOrdn" type="string">
+            <column name="fre_ordn" length="1" />
+        </property>
+        <property name="frePala" type="string">
+            <column name="fre_pala" length="1" />
+        </property>
+        <property name="freRevi" type="string">
+            <column name="fre_revi" length="1" />
+        </property>
+        <property name="habPtex" type="string">
+            <column name="hab_ptex" length="1" />
+        </property>
+        <property name="habPres" type="string">
+            <column name="hab_pres" length="1" />
+        </property>
+        <property name="habFbas" type="string">
+            <column name="hab_fbas" length="1" />
+        </property>
+        <property name="habBaj" type="string">
+            <column name="hab_baj" length="1" />
+        </property>
+        <property name="famExa" type="string">
+            <column name="fam_exa" length="1" />
+        </property>
+        <property name="preExa1" type="string">
+            <column name="pre_exa1" length="1" />
+        </property>
+        <property name="vivMad" type="string">
+            <column name="viv_mad" length="1" />
+        </property>
+        <property name="vivPad" type="string">
+            <column name="viv_pad" length="1" />
+        </property>
+        <property name="vivOtro" type="string">
+            <column name="viv_otro" length="1" />
+        </property>
+        <property name="dudaPer" type="string">
+            <column name="duda_per" length="1" />
+        </property>
+        <property name="escoMad" type="string">
+            <column name="esco_mad" length="1" />
+        </property>
+        <property name="escoPad" type="string">
+            <column name="esco_pad" length="1" />
+        </property>
+        <property name="cuanLib" type="string">
+            <column name="cuan_lib" length="1" />
+        </property>
+        <property name="serTele" type="string">
+            <column name="ser_tele" length="1" />
+        </property>
+        <property name="serLav" type="string">
+            <column name="ser_lav" length="1" />
+        </property>
+        <property name="serRef" type="string">
+            <column name="ser_ref" length="1" />
+        </property>
+        <property name="serHor" type="string">
+            <column name="ser_hor" length="1" />
+        </property>
+        <property name="serInte" type="string">
+            <column name="ser_inte" length="1" />
+        </property>
+        <property name="serCabl" type="string">
+            <column name="ser_cabl" length="1" />
+        </property>
+        <property name="serDvd" type="string">
+            <column name="ser_dvd" length="1" />
+        </property>
+        <property name="bienPc" type="string">
+            <column name="bien_pc" length="1" />
+        </property>
+        <property name="serTv" type="string">
+            <column name="ser_tv" length="1" />
+        </property>
+        <property name="serAuto" type="string">
+            <column name="ser_auto" length="1" />
+        </property>
+        <property name="serBano" type="string">
+            <column name="ser_bano" length="1" />
+        </property>
+        <property name="vacRm" type="string">
+            <column name="vac_rm" length="1" />
+        </property>
+        <property name="edoRep" type="string">
+            <column name="edo_rep" length="1" />
+        </property>
+        <property name="verSel" type="string">
+            <column name="ver_sel" length="4" />
+        </property>
+        <property name="cveCons" type="string">
+            <column name="cve_cons" length="1" />
+        </property>
+        <property name="resSel" type="string">
+            <column name="res_sel" length="65535" />
+        </property>
+        <property name="horaInis" type="string">
+            <column name="hora_inis" length="2" />
+        </property>
+        <property name="minInis" type="string">
+            <column name="min_inis" length="2" />
+        </property>
+        <property name="horaFins" type="string">
+            <column name="hora_fins" length="2" />
+        </property>
+        <property name="minFins" type="string">
+            <column name="min_fins" length="2" />
+        </property>
+        <property name="modDiag" type="string">
+            <column name="mod_diag" length="2" />
+        </property>
+        <property name="verDiag" type="string">
+            <column name="ver_diag" length="4" />
+        </property>
+        <property name="cveMod" type="string">
+            <column name="cve_mod" length="1" />
+        </property>
+        <property name="cveCond" type="string">
+            <column name="cve_cond" length="1" />
+        </property>
+        <property name="resDiag" type="string">
+            <column name="res_diag" length="65535" />
+        </property>
+        <property name="horaInid" type="string">
+            <column name="hora_inid" length="2" />
+        </property>
+        <property name="minInid" type="string">
+            <column name="min_inid" length="2" />
+        </property>
+        <property name="horaFind" type="string">
+            <column name="hora_find" length="2" />
+        </property>
+        <property name="minFind" type="string">
+            <column name="min_find" length="2" />
+        </property>
+        <property name="resExtra" type="string">
+            <column name="res_extra" length="40" />
+        </property>
+    </class>
+</hibernate-mapping>

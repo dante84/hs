@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    
+    <h:body>              
+     
+       <ui:composition template="/Contenido/Plantillas/basePlantilla.xhtml">
+           
+           <ui:define name="content">
+               
+               <p:growl id="growl" sticky="false" life="4000"/>             
+       
+               <h:form enctype="multipart/form-data">
+                   <p:fileUpload value="#{CDat.archivo}" mode="simple"/>
+                   <p:commandButton value="Enviar" ajax="false" actionListener="#{CDat.subir}" update="growl"/>
+               </h:form>       
+               
+           </ui:define> 
+           
+       </ui:composition>
+        
+    </h:body>
+    
+</html>

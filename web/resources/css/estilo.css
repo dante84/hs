@@ -1,0 +1,51 @@
+/* 
+    Document   : estilo
+    Created on : 16/01/2013, 11:10:21 AM
+    Author     : Daniel.Meza
+    Description:
+        Estilo general del sitio
+*/
+
+root { 
+    display: block;
+}
+
+/*Estilo de todos los widgets de primefaces*/
+.ui-widget{
+    font-size: 10px;
+}
+
+.espacio{
+    margin: 5px;
+}
+
+.centrado{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+    width: 25%;
+    height: 25%;
+}
+
+.ui-button{
+    cursor: default;
+    margin-bottom: 5px;
+    height: 35px;
+}
+
+body{
+    font-family: Arial,sans-serif;    
+}
+
+.etiqueta{
+    font-size: 11px;
+    text-decoration: none;
+}
+
+ul{
+   list-style: none;
+}
+
+#pie{
+     
+}

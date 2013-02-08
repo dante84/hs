@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 6/02/2013 11:28:25 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="mx.edu.ceneval.mapeos.Incidencias" table="incidencias" catalog="replicasiipo">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="tipoArchivo" type="string">
+            <column name="tipo_archivo" length="65535" />
+        </property>
+        <property name="posicionArchivo" type="string">
+            <column name="posicion_archivo" length="6" />
+        </property>
+        <property name="folio" type="java.lang.Integer">
+            <column name="folio" />
+        </property>
+        <property name="incidencia" type="string">
+            <column name="incidencia" length="65535" />
+        </property>
+        <property name="campoAfectado" type="string">
+            <column name="campo_afectado" length="25" />
+        </property>
+        <property name="datoOriginal" type="string">
+            <column name="dato_original" length="65535" />
+        </property>
+        <property name="datoCorregido" type="string">
+            <column name="dato_corregido" length="65535" />
+        </property>
+        <property name="usuario" type="string">
+            <column name="usuario" length="50" />
+        </property>
+        <property name="fechaCorrecion" type="date">
+            <column name="fecha_correcion" length="10" />
+        </property>
+        <property name="corregido" type="java.lang.Boolean">
+            <column name="corregido" />
+        </property>
+    </class>
+</hibernate-mapping>

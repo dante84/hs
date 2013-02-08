@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/replicasiipo?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">slipknot</property>
+    <mapping resource="mx/edu/ceneval/mapeos/Incidencias.hbm.xml"/>
+    <mapping resource="mx/edu/ceneval/mapeos/LongitudCampos.hbm.xml"/>
+    <mapping resource="mx/edu/ceneval/mapeos/Usuarios.hbm.xml"/>
+    <mapping resource="mx/edu/ceneval/mapeos/LecturaModificados.hbm.xml"/>
+    <mapping resource="mx/edu/ceneval/mapeos/LecturaOriginales.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>
