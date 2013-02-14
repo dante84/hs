@@ -3,17 +3,21 @@ package mx.edu.ceneval.controladores;
 
 // @author Daniel.Meza
 
+import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import mx.edu.ceneval.extras.Conexion;
-import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
  
 public class CDat {
@@ -36,97 +40,108 @@ public class CDat {
                   
                   System.out.println("Nombre archivo " + nombreArchivo + " Clave = " + clave );
                   
-                  if( nombreArchivo.endsWith(".dat") ){
-                      
-                      System.out.println("Antes del try");
+                  if( nombreArchivo.endsWith(".dat") ){                                            
                       
                       try{
-                                                                              
+                           
+                          ArrayList<String> lineas = new ArrayList<String>();
+                          String linea = "";
                           InputStream is = archivo.getInputstream();
-                          StringWriter sw = new StringWriter();
-                          IOUtils.copy(is, sw);
-                          String datos = sw.toString();
-                          String valor = "";                                                                                                                                    
                           
-                          System.out.println("Antes del resultset");
+                          Map<String,String> valores = new HashMap<String,String>();  
                           
+                          BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                          
+                          while( (linea = br.readLine()) != null ){                                 
+                                 lineas.add(linea);                                                                                                   
+                          }
+                          
+                          int i = 1;
+                          for(String line : lineas ){
+                              System.out.println( i + " - " + line);
+                              i++;
+                          }                                                    
+                                                                                                                             
                           cc = new Conexion();
                           conexion = cc.getC();
                           Statement s = conexion.createStatement();
                           ResultSet rs = s.executeQuery("select * from longitud_campos left outer join claves_examen on " +
                                                         "longitud_campos.clave_instrumento = claves_examen.clave_instrumento " +
                                                         "where claves_examen.clave = '" + clave + "'");                                                    
-                                                                                  
-                          System.out.println("ResultSet " + !rs.isBeforeFirst());
-                          
+                                                                                                                                      
                           int longitud = 0;                                                                                                                                                                                       
-                          
+                                                    
                           if( !rs.isBeforeFirst() ){ context.addMessage(null, new FacesMessage("La clave de examen no existe. Verifica")); }
                           else{
                               
                                ResultSetMetaData rsmd = rs.getMetaData();                                                    
-                               int lDatos = datos.length() - 1; 
-           
                                rs.next();
-                                                   
-                               for( int m = 1; m <= rsmd.getColumnCount(); m++){
-                                    String nc = rsmd.getColumnName(m);                                                                                                                                          
-                                    if( nc.equals("id") || nc.equals("tipo_exa") || nc.equals("nombre") || nc.equals("clave") || 
-                                        nc.equals("clave_instrumento") ){ 
-                                        continue;                                                 
-                                    }else{ longitud = rs.getInt(m); }                                                                                                
-                                             
-                                    //System.out.println("Caracter = " + c + " valor = " + valor + " longitud = " + longitud + " nc = " + nc);                                                                                                                           
-                                    valor = regresaValor(longitud, lDatos, datos);
-                                                                                                                                                                                                                                                                                                                                                                                                                            
-                               }                                                       
+                               
+                               int indice = 0;
+                               for( int p = 0; p <= lineas.size() - 2; p++ ){                                                                             
+                                    String line = lineas.get(p);
+                                    for( int m = 1; m <= rsmd.getColumnCount(); m++){
+                                         String nc = rsmd.getColumnName(m);                                                                                                                                          
+                                         if( nc.equals("id") || nc.equals("tipo_exa") || nc.equals("nombre") || nc.equals("clave") || 
+                                             nc.equals("clave_instrumento") ){ 
+                                             continue;                                                 
+                                         }else{ longitud = rs.getInt(m); }                                                                                                
+                                                                                   
+                                         valores = regresaValor(longitud,line,indice,nc);                                         
+                                         
+                                         Set keys = valores.keySet();
+                                         
+                                         for(Object value : keys ){                                             
+                                             System.out.println("Columna = " + nc + " valor = " + valores.get((String)value) + " longitud = " + longitud );
+                                         }
+                                         
+                                    }                                                       
                                 
-                         }
+                               }
                           
-                         rs.close();
-                         s.close();
-                         conexion.close();
+                               rs.close();
+                               s.close();
+                               conexion.close();
+                               
+                          }
                           
                      }catch(Exception e){}
                                             
-                 }else{                      
-                       context.addMessage(null, new FacesMessage("El archivo es invalido"));                        
-                 }
+                 }else{ context.addMessage(null, new FacesMessage("El archivo es invalido")); }
                                                       
               }
                                           
        }
        
-       public String regresaValor(int longitud,int lDatos,String datos){
+       public Map<String,String> regresaValor(int longitud,String linea,int indice,String clave){
             
+              Map<String,String> valores = new HashMap<String,String>();              
               String valor = "";
               char c = '\0';              
               
-              for( int n = 1; n <= longitud; n++ ){
-                                                                                                            
-                   if( n == longitud ){                                                 
-                       break;
-                   }
-                                                      
-                   for( int ñ = 0; ñ <= lDatos; ñ++ ){
+              int i = 0;
+              for( int ñ = indice; ñ <= linea.length() - 1; ñ++ ){
                                                                                                    
-                        c = (char)datos.charAt(ñ);                                                                                                                                                                                                              
+                   c = (char)linea.charAt(ñ);                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                                                                 
-                        if( ñ >= 61 ){                                                                               
-                            System.out.println("ñ = " + ñ + " c = " + c + " valor = " + valor );                                                                                                                           
-                            valor += c;
-                                                                                                                                                           
-                            //System.out.println("longitud = " + longitud + " c = " + c + " valor = " + valor + " n = " + n);                                                                                                          
-                                                       
-                        }
-                                                    
-                   }    
-                                                                                                                              
+                   if( ñ >= 60 ){                                                                                                                             
+                       valor += c;
+                       i++;                                                    
+                       if( i == longitud ){                                                                            
+                           i = 0;
+                           valores.put(clave, valor);
+                           valores.put("indice",String.valueOf(indice));
+                           valor = "";                           
+                       }
+                       
+                   }
+                   
+                   indice++;
+                                                                                                                                                                                                                                           
               } 
            
-              return valor;
+              return valores;
            
        }
-       
-    
+           
 }
