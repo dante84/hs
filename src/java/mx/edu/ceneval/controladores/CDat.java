@@ -117,9 +117,9 @@ public class CDat {
             
               Map<String,String> valores = new HashMap<String,String>();              
               String valor = "";
-              char c = '\0';              
+              char c = '\0';                            
               
-              int i = 0;
+              int i = 0;              
               for( int ñ = indice; ñ <= linea.length() - 1; ñ++ ){
                                                                                                    
                    c = (char)linea.charAt(ñ);                                                                                                                                                                                                              
@@ -129,7 +129,7 @@ public class CDat {
                        i++;                                                    
                        if( i == longitud ){                                                                            
                            i = 0;
-                           valores.put(clave, valor);
+                           valores.put(clave,valor);
                            valores.put("indice",String.valueOf(indice));
                            valor = "";                           
                        }

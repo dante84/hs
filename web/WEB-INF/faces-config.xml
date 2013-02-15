@@ -45,8 +45,6 @@
             <from-outcome>irValidarArchivos</from-outcome>
             <to-view-id>/Contenido/Validacion/validacionPrincipal.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>   
-    
-    
+    </navigation-rule>               
      
 </faces-config>

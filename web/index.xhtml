@@ -3,20 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     
     <h:head>
          <h:outputStylesheet library="css" name="estilo.css"/>
     </h:head>           
     
-    <h:body>        
-        <h:panelGroup layout="block" styleClass="centrado">           
-           <h:form>               
-               <p:growl id="growl" sticky="false" life="4000"/>
-               <span class="etiqueta">Usuario:</span> <h:inputText styleClass="espacio" maxlength="40" value="#{CLogin.nombre}" />
-               <p:commandButton styleClass="espacio" action="#{CLogin.compararDatosLogin}" type="submit" value="Enviar" update="growl" />
+    <h:body onload="dialogo.show();">                                      
+        <p:growl id="growl" sticky="false" life="4000"/>                 
+        
+        <p:dialog header="Logueo" widgetVar="dialogo" resizable="false" closable="false" draggable="false">
+           <h:form>                                                    
+              <span class="etiqueta">Usuario:</span><h:inputText styleClass="espacio" maxlength="40" value="#{CLogin.nombre}" />
+              <p:commandButton styleClass="espacio" action="#{CLogin.compararDatosLogin}" type="submit" value="Enviar" update=":growl"/>                                                                            
            </h:form>
-        </h:panelGroup>
+        </p:dialog>
+        
     </h:body>
     
 </html>

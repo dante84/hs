@@ -28,13 +28,13 @@ public class CLogin {
                   
                   s.getTransaction().commit();
                                     
-                  if( nombres.size() - 1 != -1 ){ 
-                      context.addMessage("", new FacesMessage("Bienvenido " + nombre));
+                  if( nombres.size() - 1 != -1 ){                       
                       context.getExternalContext().getFlash().setKeepMessages(true);
+                      context.addMessage("", new FacesMessage("Bienvenido " + nombre));
                       return "login";  
                   }
                   else{ 
-                       context.addMessage("", new FacesMessage("El nombre de usuario no existe o esta mal escrito"));                        
+                       context.addMessage("", new FacesMessage("El nombre de usuario no existe o esta mal escrito"));                          
                   }
                                     
                   s.close();
