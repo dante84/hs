@@ -71,63 +71,75 @@ public class CDat {
                                ResultSetMetaData rsmd = rs.getMetaData();                                                    
                                rs.next();
                                   
-                               int ñ = 0;
-                               for( int p = 0; p <= lineas.size() - 2; p++ ){   
-                                   
-                                    String line = lineas.get(p);                                      
-                                    System.out.println((lineas.size() - 2) + "  " + p + "  " + line);
-                                    String valor = "";
-                                    char c = '\0';                                          
-                                    int index = 0;              
-                                    boolean seguir = true;                                                                                                
-                                         
-                                    while( seguir ){                                       
-                  
-                                           c = (char)line.charAt(ñ);                                                                                                                                                                                                                                                                                                                                                               
-                                           System.out.println("ñ = " + ñ + "   c = " + c);
-                                           
-                                           for( int m = 1; m <= rsmd.getColumnCount(); m++ ){
-                                                String nc = rsmd.getColumnName(m);                                                                                                                                          
-                                                System.out.println("columna = " + nc);
-                                                if( nc.equals("id") || nc.equals("tipo_exa") || nc.equals("nombre") || nc.equals("clave") || 
-                                                    nc.equals("clave_instrumento") ){ 
-                                                    continue;                                                 
-                                                }else{ longitud = rs.getInt(m); }                                                                                                                                                                                                                           
-                                                
-                                                if( ñ >= 60 ){      
-                                                    
-                                                    valor += c;
-                                                    index++;                                                    
-                                                   
-                                                    if( index == longitud ){                                                                                                                                      
-                                                        
-                                                        ñ += index - 1;
-                                                        System.out.println(ñ + " " + seguir + " " + valor + " " + longitud + " " + index);
-                                                        index = 0;
-                                                        values.add(valor);                           
-                                                        valor = "";                                                               
-                                                        break;
-                                                        
-                                                  }
-                                                                     
-                                              }                                                                                           
-                                                                                                                                                                                                                                           
-                                           }                                                                                                                       
-                                           
-                                           ñ++;                                               
-                                           if( ñ == line.length() - 1 ){ 
-                                               rs.beforeFirst();
-                                               seguir = false; 
-                                           }
-                                         
-                                    }                                                       
-                                
-                               }
-                          
-//                               for( String v : values ){
-//                                    System.out.println("Valor = " + v);
-//                               }
+                               int noColumnas = rsmd.getColumnCount();
+                               int noLineas = lineas.size() - 2;
+                               String dato = "";
+                               int posicionInicio = rs.getInt("posicion_inicio");
+                               int h = 1;
+                               int indice = 0;
                                
+                               System.out.println(noColumnas + " " + noLineas + " " + posicionInicio );
+                               
+                               int k = 0;
+                               while( k <= noLineas ){
+                                   
+                                      String line = lineas.get(k); 
+                                      int tamañoLinea = line.length() - 1;
+                                      System.out.println( k + "  -  " + line );                                                                                                            
+                                    
+                                      int i = 0;
+                                      int l = 0;
+                                      while( i <= tamañoLinea ){
+                                                                                                                         
+                                             char c = line.charAt(i);                                                                                                                                                                        
+                                             boolean paso = true;
+                                             while( paso ){
+                                             
+                                                    String nc = rsmd.getColumnName(h);
+                                                
+                                                    //System.out.println(nc);
+                                                
+                                                    if( nc.equals("tipo_exa") || nc.equals("version_diccionario") || nc.equals("id") ||
+                                                        nc.equals("nombre") ){ 
+                                                        h++;
+                                                        continue; 
+                                                    }else{ longitud = rs.getInt(h); } 
+                                                        
+                                                    System.out.println(l + " " + posicionInicio);                                                                                                
+                                                    
+                                                    if( l > posicionInicio ){
+                                                    
+                                                        System.out.println( l + "  -  c  =  " + c );
+                                                        dato += c;                                                                                          
+                                                        indice++;
+                                                    
+                                                        if( indice == longitud ){
+                                                        
+                                                            indice = 0;
+                                                            l += longitud;
+                                                            h++;
+                                                            System.out.println("Dato = " + dato);
+                                                            dato = "";                                                                                                                                                                                                                                                
+                                                            
+                                                        }
+                                                    
+                                                    } 
+                                                
+                                                    h++;
+                                                    l++;
+                                                
+                                           }
+                                            
+                                           i++;
+                                             
+                                      }
+                                        
+                                     
+                                      k++;
+                                      h = 1;         
+                                    
+                               }
+                                                                                        
                                rs.close();
                                s.close();
                                conexion.close();
