@@ -15,7 +15,7 @@
         
         <p:dialog header="Logueo" widgetVar="dialogo" resizable="false" closable="false" draggable="false">
            <h:form>                                                    
-              <span class="etiqueta">Usuario:</span><h:inputText styleClass="espacio" maxlength="40" value="#{CLogin.nombre}" />
+              <span class="etiqueta">Usuario:</span><h:inputText styleClass="espacio" maxlength="40" value="#{CLogin.nombre}" />              
               <p:commandButton styleClass="espacio" action="#{CLogin.compararDatosLogin}" type="submit" value="Enviar" update=":growl"/>                                                                            
            </h:form>
         </p:dialog>

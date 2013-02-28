@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
 import mx.edu.ceneval.extras.Conexion;
 import org.primefaces.model.UploadedFile;
  
@@ -25,13 +27,46 @@ public class CDat {
        private FacesContext context = FacesContext.getCurrentInstance();
        private Connection conexion;
        private Conexion cc;
-       private ArrayList<String> values = new ArrayList<String>();
+       private ArrayList<SelectItem> diccionarios;
+       private String diccionarioSeleccionado = "Test";     
+       private UISelectOne selectOne;
+       
+       public CDat(){
+           
+              diccionarios = new ArrayList<SelectItem>();              
+              
+              try{                                   
+                  
+                  cc = new Conexion();
+                  conexion = cc.getC();
+                  Statement s = conexion.createStatement();
+                  ResultSet rs = s.executeQuery("select version_diccionario from longitud_campos");                                                                            
+                  
+                  if( rs.isBeforeFirst() ){
+                      while( rs.next() ){
+                             
+                             String dic = rs.getString(1);
+                             if( dic != null ){
+                                 diccionarios.add(new SelectItem("Try",dic,"Catch"));
+                                 context.addMessage(null, new FacesMessage("Diccionario agregado : " + dic));
+                             }
+                             
+                      }
+                  }                                    
+                  
+              }catch(Exception e){ e.printStackTrace(); }                                                                                                                              
+              
+       }
        
        public UploadedFile getArchivo() { return archivo; }
 
-       public void setArchivo(UploadedFile up) { this.archivo = up; }
+       public void setArchivo(UploadedFile up) { this.archivo = up; }              
        
        public void subir(ActionEvent ae){                         
+              
+              for( SelectItem item : diccionarios ){
+                   System.out.println("Item = " + item.getValue());
+              }
               
               if( archivo != null ){
                   
@@ -61,131 +96,127 @@ public class CDat {
                           Statement s = conexion.createStatement();
                           ResultSet rs = s.executeQuery("select * from longitud_campos left outer join claves_examen on " +
                                                         "longitud_campos.clave_instrumento = claves_examen.clave_instrumento " +
-                                                        "where claves_examen.clave = '" + clave + "'");                                                    
-                                                                                                                                      
-                          int longitud = 0;                                                                                                                                                                                       
-                                                    
+                                                        "where claves_examen.clave = '" + clave + "' and version_diccionario = '" +
+                                                         diccionarioSeleccionado + "'");                                                    
+                                                                                                                                                                                                                   
                           if( !rs.isBeforeFirst() ){ context.addMessage(null, new FacesMessage("La clave de examen no existe. Verifica")); }
-                          else{
-                              
+                          else{                                                             
+                               
                                ResultSetMetaData rsmd = rs.getMetaData();                                                    
                                rs.next();
-                                  
+                               
                                int noColumnas = rsmd.getColumnCount();
+                               ArrayList<Integer> longitudes = new ArrayList<Integer>();
+                                                                                             
+                               for( int h = 1; h <= noColumnas; h++ ){
+                                   
+                                    String nc = rsmd.getColumnName(h);                                                
+                                    System.out.println(nc);
+                                                
+                                    if( nc.equals("tipo_exa") || nc.equals("version_diccionario") || nc.equals("id") ||
+                                        nc.equals("nombre") ){ 
+                                        continue; 
+                                    }else{ longitudes.add(rs.getInt(h)); } 
+                                    
+                               }
+                                               
+                               int tLongitudes = longitudes.size() - 1;
+                               int longitud = longitudes.get(0);  
                                int noLineas = lineas.size() - 2;
                                String dato = "";
                                int posicionInicio = rs.getInt("posicion_inicio");
                                int h = 1;
                                int indice = 0;
                                
-                               System.out.println(noColumnas + " " + noLineas + " " + posicionInicio );
+                               System.out.println( noColumnas + " " + noLineas + " " + posicionInicio );
                                
                                int k = 0;
                                while( k <= noLineas ){
                                    
                                       String line = lineas.get(k); 
                                       int tamañoLinea = line.length() - 1;
-                                      System.out.println( k + "  -  " + line );                                                                                                            
-                                    
+                                      System.out.println(line);
+                                     
                                       int i = 0;
                                       int l = 0;
-                                      while( i <= tamañoLinea ){
-                                                                                                                         
-                                             char c = line.charAt(i);                                                                                                                                                                        
-                                             boolean paso = true;
-                                             while( paso ){
+                                      while( i <= tamañoLinea ){                                                                                          
                                              
-                                                    String nc = rsmd.getColumnName(h);
-                                                
-                                                    //System.out.println(nc);
-                                                
-                                                    if( nc.equals("tipo_exa") || nc.equals("version_diccionario") || nc.equals("id") ||
-                                                        nc.equals("nombre") ){ 
-                                                        h++;
-                                                        continue; 
-                                                    }else{ longitud = rs.getInt(h); } 
-                                                        
-                                                    System.out.println(l + " " + posicionInicio);                                                                                                
+                                             if( i > posicionInicio ){
+                                             
+                                                 char c = line.charAt(i);                                                                                                                                                                                                                         
+                                                 dato += c;                                                                                          
+                                                 indice++;
                                                     
-                                                    if( l > posicionInicio ){
+                                                 if( indice == longitud ){                                                                                                                                                                  
+                                                     
+                                                     indice = 0;
+                                                     l += longitud;                                                     
+                                                     longitud = longitudes.get(h);
+                                                     h++;                                                               
+                                                     dato = "";    
+                                                     
+                                                     System.out.println("tLongitudes = " + tLongitudes + " k = " + k + " i = " + i + " longitud = " + longitud + 
+                                                                        "  Dato = " + dato  + " l = " + l + " TLinea = " + tamañoLinea );
+                                                     
+                                                     if( l >= (tamañoLinea - posicionInicio) ){ break; }
+                                                           
+                                                 }
                                                     
-                                                        System.out.println( l + "  -  c  =  " + c );
-                                                        dato += c;                                                                                          
-                                                        indice++;
-                                                    
-                                                        if( indice == longitud ){
-                                                        
-                                                            indice = 0;
-                                                            l += longitud;
-                                                            h++;
-                                                            System.out.println("Dato = " + dato);
-                                                            dato = "";                                                                                                                                                                                                                                                
+                                             } 
                                                             
-                                                        }
-                                                    
-                                                    } 
-                                                
-                                                    h++;
-                                                    l++;
-                                                
-                                           }
-                                            
-                                           i++;
+                                             i++;
                                              
                                       }
-                                        
-                                     
-                                      k++;
-                                      h = 1;         
+                                                                             
+                                      k++;                                     
                                     
-                               }
-                                                                                        
-                               rs.close();
-                               s.close();
-                               conexion.close();
-                               
+                               }                                                              
+                                                              
                           }
                           
+                          rs.close();
+                          s.close();
+                          conexion.close();
+                                                    
                      }catch(Exception e){}
                                             
-                 }else{ context.addMessage(null, new FacesMessage("El archivo es invalido")); }
-                                                      
-              }
-                                          
-       }
-       
-       public void regresaValor(int longitud,String linea,int indice,String clave){
-            
-              String valor = "";
-              char c = '\0';                            
-              
-              int i = 0;              
-              boolean seguir = true;
-              int ñ = 0;
-              
-              while( seguir ){                                       
+                 }else{ context.addMessage(null, new FacesMessage("El archivo es invalido")); }                                
+                 
+                 selectOne.setRendered(true); 
                   
-                     c = (char)linea.charAt(ñ);                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                                                                
-                     if( ñ >= 60 ){                                                                                                                             
-                         valor += c;
-                         i++;                                                    
-                         if( i == longitud ){                                                                                                                                      
-                             ñ += i - 1;
-                             System.out.println(ñ + " " + seguir + " " + valor + " " + longitud + " " + i);
-                             i = 0;
-                             values.add(valor);                           
-                             valor = "";                                                               
-                         }
-                                                                     
-                     }
-                                          
-                     ñ++;                     
-                     
-                     if( ñ > linea.length() - 1 ){ seguir = false; }                                          
-                                                                                                                                                                                                                                           
-              } 
-                      
+              }
+                            
+              
+       }     
+       
+       public void ProcesarDat(){
+            
+              
+             
+       }
+      
+       public String getDiccionarioSeleccionado() { return diccionarioSeleccionado; }
+
+       public void setDiccionarioSeleccionado(String diccionarioSeleccionado) {
+              this.diccionarioSeleccionado = diccionarioSeleccionado;
+       }
+   
+   
+   
+       public UISelectOne getSelectOne() {
+              return selectOne;
+       }
+
+       public void setSelectOne(UISelectOne selectOne) {
+              this.selectOne = selectOne;
+       }
+    
+       public ArrayList<SelectItem> getDiccionarios() {
+              return diccionarios;
+       }
+
+       public void setDiccionarios(ArrayList<SelectItem> diccionarios) {
+              this.diccionarios = diccionarios;
        }
            
 }
