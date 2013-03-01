@@ -13,17 +13,25 @@
            
            <ui:define name="content">
                
-               <p:growl id="growl" sticky="false" life="4000"/>             
+               <p:growl id="growl" />             
        
                <h:form enctype="multipart/form-data">                   
-                   <p:fileUpload value="#{CDat.archivo}" mode="simple" update="formaFu:fu"/>                                     
+                   <p:fileUpload value="#{CDat.archivo}" mode="simple"/>                                     
                    <p:commandButton value="Cargar Archivo" ajax="false" actionListener="#{CDat.subir}" update="growl"/>
                </h:form>       
                
                <h:form id="formaFu">
                    <h:selectOneMenu id="fu" value="#{CDat.diccionarioSeleccionado}" rendered="false" binding="#{CDat.selectOne}">
                        <f:selectItems value="#{CDat.diccionarios}"/>                      
-                  </h:selectOneMenu>
+                   </h:selectOneMenu>
+                   <p:commandButton value="Procesar Archivo" actionListener="#{CDat.procesarDat}" rendered="false" binding="#{CDat.cbProcesarArchivo}"
+                                    update=":growl"/>
+               </h:form>
+               
+               <h:form>
+                   <h:dataTable>
+                       
+                   </h:dataTable>
                </h:form>
                
            </ui:define> 
