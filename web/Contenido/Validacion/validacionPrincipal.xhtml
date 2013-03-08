@@ -21,10 +21,10 @@
                </h:form>       
                
                <h:form id="formaFu">
-                   <h:selectOneMenu id="fu" value="#{CDat.diccionarioSeleccionado}" rendered="false" binding="#{CDat.selectOne}">
+                   <h:selectOneMenu id="fu" value="#{CProcesarDat.diccionarioSeleccionado}" rendered="false" binding="#{CDat.selectOne}">
                        <f:selectItems value="#{CDat.diccionarios}"/>                      
                    </h:selectOneMenu>
-                   <p:commandButton value="Procesar Archivo" actionListener="#{CDat.procesarDat}" rendered="false" binding="#{CDat.cbProcesarArchivo}"
+                   <p:commandButton value="Procesar Archivo" actionListener="#{CProcesarDat.procesarDat}" rendered="false" binding="#{CDat.cbProcesarArchivo}"
                                     update=":growl"/>
                </h:form>
                

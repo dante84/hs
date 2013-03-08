@@ -15,13 +15,19 @@
         <managed-bean-name>CNavegacionPrincipal</managed-bean-name>  
         <managed-bean-class>mx.edu.ceneval.controladores.CNavegacionPrincipal</managed-bean-class>            
         <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>   
+    </managed-bean>  
     
     <managed-bean>  
         <managed-bean-name>CDat</managed-bean-name>  
         <managed-bean-class>mx.edu.ceneval.controladores.CDat</managed-bean-class>            
         <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>   
+    </managed-bean>          
+    
+    <managed-bean>  
+        <managed-bean-name>CProcesarDat</managed-bean-name>  
+        <managed-bean-class>mx.edu.ceneval.controladores.CProcesarDat</managed-bean-class>            
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
     
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
