@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -27,8 +26,6 @@ import mx.edu.ceneval.extras.Conexion;
 @RequestScoped
 public class CProcesarDat implements Serializable{
     
-       @ManagedProperty(value="#{CDat}") 
-       private CDat cdat;
        private String diccionarioSeleccionado;     
        private FacesContext context = FacesContext.getCurrentInstance();
        private Connection conexion;
@@ -69,22 +66,23 @@ public class CProcesarDat implements Serializable{
                       String select = "";
                       
                       if( nombreArchivo.startsWith("R") || nombreArchivo.startsWith("r") ){
-                          select += "select posicion_inicio,apli,fecha_apli,tipo_exa,opc_apli,ano_ver,tipo_reg,tipo_resp,cve_bpm,apli,fecha_apli,cve_inst," +
-                                    "identifica,folio,matricula,ape_pat,ape_mat,nombre,dia_nac,mes_nac,ano_nac,sexo,li_mad,li_pad,edo_proc,nom_proc," +
-                                    "ciu_proc,cve_proc,reg_proc,mod_lic,prom_lic,bec_sdac,bec_sne,bec_shd,hrs_trab,est_alca,des_idea,des_desa,des_aten,des_esme," +
-                                    "des_meta,des_dist,des_term,des_duro,hab_eime,cua_pesc,conteni,redaccio,organiza,ortogra,presenta,hab_arg,hab_rep,hab_his," +
-                                    "hab_car,fre_aide,fre_ordn,fre_pala,fre_revi,pre_exa1,pre_exa2,pre_exa3,vive_mad,vive_pad,vive_par,vive_otr,tie_hij," +
-                                    "esco_mad,esco_pad,esco_par,cuan_lib,ser_tele,ser_lav,ser_ref,ser_hor,ser_inte,ser_cabil,bie_dvd,bie_pc,bie_tv,bie_auto," +
-                                    "ser_bano,vac_rm,edo_rep,vac_ext from longitud_campos left outer join claves_examen on longitud_campos.clave_instrumento = " +
-                                    "claves_examen.clave_instrumento where claves_examen.clave = '" + clave + "' and " + 
-                                    "longitud_campos.version_diccionario = '" + diccionarioSeleccionado + "'";                                                                                                                                                       
+//                          select += "select posicion_inicio,apli,fecha_apli,opc_apli,ano_ver,tipo_reg,tipo_resp,cve_bpm,apli,fecha_apli,cve_inst,identifica," +
+//                                    "folio,matricula,ape_pat,ape_mat,longitud_campos.nombre,dia_nac,mes_nac,ano_nac,sexo,li_mad,li_pad,edo_proc,nom_proc," +
+//                                    "ciu_proc,cve_proc,reg_proc,mod_lic,prom_lic,bec_sdac,bec_sne,bec_shd,hrs_trab,est_alca,des_idea,des_desa,des_aten,des_esme," +
+//                                    "des_meta,des_dist,des_term,des_duro,hab_eime,cua_pesc,conteni,redaccio,organiza,ortogra,presenta,hab_arg,hab_rep,hab_his," +
+//                                    "hab_car,fre_aide,fre_ordn,fre_pala,fre_revi,pre_exa1,pre_exa2,pre_exa3,viv_mad,viv_pad,viv_par,viv_otro,tie_hij," +
+//                                    "esco_mad,esco_pad,esco_par,cuan_lib,ser_tele,ser_lav,ser_ref,ser_hor,ser_inte,ser_cabl,ser_tabl,bie_dvd,bien_pc,bie_tv,bie_auto," +
+//                                    "ser_bano,vac_rm,edo_rep,vac_ext from longitud_campos left outer join claves_examen on longitud_campos.clave_instrumento = " +
+//                                    "claves_examen.clave_instrumento where claves_examen.clave = '" + clave + "' and " + 
+//                                    "longitud_campos.version_diccionario = '" + diccionarioSeleccionado + "'";                                                                                                                                                       
+                            select += "call evaluarDat(clave,)";
                       }
                       
                       if( nombreArchivo.startsWith("S") || nombreArchivo.startsWith("s") ){
-                          select += "select posicion_inicio,apli,fecha_apli,perfil,version,cve_con,hora_inis,min_inis,respuesta,hora_fins,min_fins,res_extra "+
-                                    "from longitud_campos left outer join claves_examen on longitud_campos.clave_instrumento = " +
-                                    "claves_examen.clave_instrumento where claves_examen.clave = '" + clave + "' and " + 
-                                    "longitud_campos.version_diccionario = '" + diccionarioSeleccionado + "'";                                                                                                                                                       
+//                          select += "select posicion_inicio,apli,fecha_apli,cve_inst,identifica,per_mcon,folio,perfil,version,cve_con,hora_inis,min_inis,respuesta," +
+//                                    "hora_fins,min_fins,res_extra from longitud_campos left outer join claves_examen on longitud_campos.clave_instrumento = " +
+//                                    "claves_examen.clave_instrumento where claves_examen.clave = '" + clave + "' and " + 
+//                                    "longitud_campos.version_diccionario = '" + diccionarioSeleccionado + "'";                                                                                                                                                       
                       }
                       
                       System.out.println(select);
@@ -103,64 +101,75 @@ public class CProcesarDat implements Serializable{
                            for( int h = 2; h <= noColumnas; h++ ){
                                    
                                 String nc = rsmd.getColumnName(h);                                                
-                                System.out.println(nc);                                                
-                                longitudes.add( rs.getInt(h) ); 
+                                int length = rs.getInt(h);
+                                System.out.println(length + "      " + nc);                                                
+                                longitudes.add( length ); 
                                     
                            }
                                                
-                           int tLongitudes = longitudes.size() - 1;
-                           int longitud = longitudes.get(0);  
+                           int tLongitudes = longitudes.size();                           
                            int noLineas = lineas.size() - 2;
                            String dato = "";
                            int posicionInicio = rs.getInt("posicion_inicio");                           
-                           int indice = 0;
+                           int indice = 1;
                                
-                           System.out.println( noColumnas + " " + noLineas + " " + posicionInicio );
+                           System.out.println("Columnas = " + noColumnas + " lineas = " + noLineas + " posicion inicio = " + posicionInicio );
                                
+                           int h = 0;
                            int k = 0;
                            while( k <= noLineas ){
                                    
                                   String line = lineas.get(k); 
-                                  int tamañoLinea = line.length() - 1;
-                                  System.out.println(line);
-                                     
-                                  int h = 0;
-                                  int i = 0;                                  
+                                  int tamañoLinea = line.length();
+                                  System.out.println("ll = " + tamañoLinea + "   " + line);
+                                                                       
+                                  int longitud = longitudes.get(h);
+                                  int i = -1;                                  
                                   boolean flag = true;
                                   
-                                  while( flag ){                                                                                                                                                                              
+                                  while( flag ){                                                                                                                                                                                                                                                             
                                       
                                          i++;
                                          
+                                         if( i > tamañoLinea ){ 
+                                             flag = false;
+                                             continue;
+                                         }                                                                                                                                                                                              
+                                         
                                          if( i >= posicionInicio ){
+                                                                                          
+                                             char c = line.charAt(i - 1);                                                                                                                                                                                                                                                                      
                                              
-                                             char c = line.charAt(i - 1);                                                                                                                                                                                                                         
-                                             dato += c;                                                                                                                                       
-                                             indice++;                                                                                                                                                                                                                                                                                                              
+                                             if( indice <= longitud ){                                                                                                  
+                                                 dato += c;                                                                                                                                                                             
+                                                 indice++;                                                 
+                                             }
                                              
-                                             if( indice < longitud ){ continue; }                                                                                                                                                                                                                                                                                        
-                                                                                                            
-                                             if( indice == longitud ){
-                                                 System.out.println(i + " " + posicionInicio + " " + indice + " " + longitud + " " + dato);                                                 
+                                             if( indice > longitud ){
+                                                                                                 
+                                                 h++;                                                   
+                                                 
+                                                 System.out.println( h + " " + longitud + " " + dato );                                                 
+                                                 
                                                  dato = "";                                                                                                          
-                                                 indice = 0;
-                                                 longitud = longitudes.get(h);
-                                                 h++;  
-                                                 if( h > tLongitudes ){
+                                                 indice = 1;                                                 
+                                                                                                                                                   
+                                                 if( h >= tLongitudes ){
                                                      h = 0;
-                                                 }                                                     
-                                                    
-                                             }                                                                                                                                                                                                                                
-                                                    
-                                         }                                                                                                      
-                                                                                 
-                                         if( i >= tamañoLinea ){ flag = false; }                                                                                                        
+                                                     flag = false;
+                                                 }
+                                                 
+                                                 longitud = longitudes.get(h);                                                     
+                                                                                                                                                                                                                                                                                                                                                                                                              
+                                             }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
                                              
+                                         }                                                                                                                                                                                                                                      
+                                         
                                   }                                  
                                                                              
                                   k++;                                     
                                     
-                      }                                                              
+                          }                                                              
                                                               
                    }
                           

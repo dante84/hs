@@ -8,5 +8,9 @@ public class CNavegacionPrincipal {
        public String irValidarArchivos(){
               return "irValidarArchivos";
        }
+       
+       public String irConsolidacion(){
+              return "irConsolidacion";
+       }
 
 }
