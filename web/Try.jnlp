@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <jnlp spec="1.0+" codebase="http://172.16.34.21:8080/hs/" href="Try.jnlp">
-<!--<jnlp spec="1.0+" codebase="http://127.0.0.1:8080/hs/" href="Try.jnlp">-->
 	<information>
 		<title>Test applet</title>
-		<vendor>Daniel Meza</vendor>
-		<homepage href="http://172.16.34.21:8080/hs/" />
-                <!--<homepage href="http://127.0.0.1:8080/hs/" />-->
+		<vendor>Ceneval - Procesos opticos</vendor>
+		<homepage href="http://172.16.34.21:8080/hs/" />               
 		<description>Test</description>
 	</information>
 	<security>
@@ -13,13 +11,16 @@
 	</security>
 	<resources>
 		<j2se version="1.6+" />
-		<jar href="Applet.jar" />
-                <jar href="poi-3.8-20120326.jar"/>
-                <jar href="poi-ooxml-3.8-20120326.jar"/>
-                <jar href="dom4j-1.6.1.jar"/>
-                <jar href="xmlbeans-2.5.0.jar"/>
-                <jar href="poi-ooxml-schemas-3.8-20120326.jar"/>
-                <jar href="mysql-connector-java-5.1.24-bin.jar"/>
+		<jar  href="Applet.jar" />
+                <jar  href="poi-3.8-20120326.jar"/>
+                <jar  href="poi-ooxml-3.8-20120326.jar"/>
+                <jar  href="dom4j-1.6.1.jar"/>
+                <jar  href="xmlbeans-2.5.0.jar"/>
+                <jar  href="poi-ooxml-schemas-3.8-20120326.jar"/>
+                <jar  href="mysql-connector-java-5.1.24-bin.jar"/>
+                <jar  href="ojdbc6-11.2.0.3.jar"/>
+                <jar  href="itext-4.2.0.jar"/>
+                <jar  href="joda-time-2.2.jar"/>
 	</resources>
         <application-desc                     
                      main-class="Applet"

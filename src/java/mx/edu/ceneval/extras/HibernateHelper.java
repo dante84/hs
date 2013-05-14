@@ -1,5 +1,5 @@
-package mx.edu.ceneval.extras;
 
+package mx.edu.ceneval.extras;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

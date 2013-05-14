@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -66,30 +67,32 @@ public class CProcesarDat implements Serializable{
                       String select = "";
                       
                       if( nombreArchivo.startsWith("R") || nombreArchivo.startsWith("r") ){
-//                          select += "select posicion_inicio,apli,fecha_apli,opc_apli,ano_ver,tipo_reg,tipo_resp,cve_bpm,apli,fecha_apli,cve_inst,identifica," +
-//                                    "folio,matricula,ape_pat,ape_mat,longitud_campos.nombre,dia_nac,mes_nac,ano_nac,sexo,li_mad,li_pad,edo_proc,nom_proc," +
-//                                    "ciu_proc,cve_proc,reg_proc,mod_lic,prom_lic,bec_sdac,bec_sne,bec_shd,hrs_trab,est_alca,des_idea,des_desa,des_aten,des_esme," +
-//                                    "des_meta,des_dist,des_term,des_duro,hab_eime,cua_pesc,conteni,redaccio,organiza,ortogra,presenta,hab_arg,hab_rep,hab_his," +
-//                                    "hab_car,fre_aide,fre_ordn,fre_pala,fre_revi,pre_exa1,pre_exa2,pre_exa3,viv_mad,viv_pad,viv_par,viv_otro,tie_hij," +
-//                                    "esco_mad,esco_pad,esco_par,cuan_lib,ser_tele,ser_lav,ser_ref,ser_hor,ser_inte,ser_cabl,ser_tabl,bie_dvd,bien_pc,bie_tv,bie_auto," +
-//                                    "ser_bano,vac_rm,edo_rep,vac_ext from longitud_campos left outer join claves_examen on longitud_campos.clave_instrumento = " +
-//                                    "claves_examen.clave_instrumento where claves_examen.clave = '" + clave + "' and " + 
-//                                    "longitud_campos.version_diccionario = '" + diccionarioSeleccionado + "'";                                                                                                                                                       
-                            select += "call evaluarDat(clave,)";
+                        select += "select posicion_inicio,apli,fecha_apli,opc_apli,ano_ver,tipo_reg,tipo_resp,cve_bpm,apli,fecha_apli,cve_inst,identifica," +
+                                  "folio,matricula,ape_pat,ape_mat,longitud_campos.nombre,dia_nac,mes_nac,ano_nac,sexo,li_mad,li_pad,edo_proc,nom_proc," +
+                                  "ciu_proc,cve_proc,reg_proc,mod_lic,prom_lic,bec_sdac,bec_sne,bec_shd,hrs_trab,est_alca,des_idea,des_desa,des_aten,des_esme," +
+                                  "des_meta,des_dist,des_term,des_duro,hab_eime,cua_pesc,conteni,redaccio,organiza,ortogra,presenta,hab_arg,hab_rep,hab_his," +
+                                  "hab_car,fre_aide,fre_ordn,fre_pala,fre_revi,pre_exa1,pre_exa2,pre_exa3,viv_mad,viv_pad,viv_par,viv_otro,tie_hij," +
+                                  "esco_mad,esco_pad,esco_par,cuan_lib,ser_tele,ser_lav,ser_ref,ser_hor,ser_inte,ser_cabl,ser_tabl,bie_dvd,bien_pc,bie_tv,"+
+                                  "bie_auto," +
+                                  "ser_bano,vac_rm,edo_rep,vac_ext from longitud_campos left outer join claves_examen on longitud_campos.clave_instrumento = " +
+                                  "claves_examen.clave_instrumento where claves_examen.clave = '" + clave + "' and " + 
+                                  "longitud_campos.version_diccionario = '" + diccionarioSeleccionado + "'";                                                                                                                                                       
+//                          s = conexion.prepareCall("call evaluarDat('" + clave + "','"+ diccionarioSeleccionado + "','R')");
                       }
                       
                       if( nombreArchivo.startsWith("S") || nombreArchivo.startsWith("s") ){
-//                          select += "select posicion_inicio,apli,fecha_apli,cve_inst,identifica,per_mcon,folio,perfil,version,cve_con,hora_inis,min_inis,respuesta," +
-//                                    "hora_fins,min_fins,res_extra from longitud_campos left outer join claves_examen on longitud_campos.clave_instrumento = " +
-//                                    "claves_examen.clave_instrumento where claves_examen.clave = '" + clave + "' and " + 
-//                                    "longitud_campos.version_diccionario = '" + diccionarioSeleccionado + "'";                                                                                                                                                       
+                          select += "select posicion_inicio,apli,fecha_apli,cve_inst,identifica,per_mcon,folio,perfil,version,cve_con,hora_inis,min_inis,respuesta," +
+                                    "hora_fins,min_fins,res_extra from longitud_campos left outer join claves_examen on longitud_campos.clave_instrumento = " +
+                                    "claves_examen.clave_instrumento where claves_examen.clave = '" + clave + "' and " + 
+                                    "longitud_campos.version_diccionario = '" + diccionarioSeleccionado + "'";                                                                                                                                                       
+//                          s = conexion.prepareCall("call evaluarDat('" + clave + "','"+ diccionarioSeleccionado + "','S')");
                       }
                       
                       System.out.println(select);
                       
-                      ResultSet rs = s.executeQuery(select);                                                    
+                      ResultSet rs = s.executeQuery(select);
                       
-                      if( !rs.isBeforeFirst() ){ context.addMessage(null, new FacesMessage("La clave de examen no existe. Verifica")); }
+                      if( !rs.isBeforeFirst() ){ context.addMessage(null, new FacesMessage("La clave " + clave + " no existe. Verifica")); }
                       else{                                                             
                                
                            ResultSetMetaData rsmd = rs.getMetaData();                                                    

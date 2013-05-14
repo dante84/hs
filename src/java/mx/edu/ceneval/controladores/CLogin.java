@@ -3,10 +3,12 @@ package mx.edu.ceneval.controladores;
 
 // @author Daniel.Meza
 
+import java.sql.SQLException;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import mx.edu.ceneval.extras.HibernateHelper;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
  
 public class CLogin {
@@ -39,7 +41,11 @@ public class CLogin {
                                     
                   s.close();
                                     
-              }catch(Exception e ){ e.printStackTrace(); }             
+              }catch(HibernateException e ){ 
+                     e.printStackTrace(); 
+                     context.addMessage("", new FacesMessage(e.getMessage()));                          
+                     
+              }             
               
               return "";
              

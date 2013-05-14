@@ -39,6 +39,7 @@ public class MultiPageMessagesSupport implements PhaseListener
     private static final long serialVersionUID = 1250469273857785274L;
     private static final String sessionToken = "MULTI_PAGE_MESSAGES_SUPPORT";
  
+    @Override
     public PhaseId getPhaseId()
     {
         return PhaseId.ANY_PHASE;
@@ -50,6 +51,7 @@ public class MultiPageMessagesSupport implements PhaseListener
      * not going to show up: don't display messages yet.
      */
     // TODO: Blog this (MultiPageMessagesSupport)
+    @Override
     public void beforePhase(final PhaseEvent event)
     {
         FacesContext facesContext = event.getFacesContext();
@@ -67,6 +69,7 @@ public class MultiPageMessagesSupport implements PhaseListener
     /*
      * Save messages into the session after every phase.
      */
+    @Override
     public void afterPhase(final PhaseEvent event)
     {
         if (!PhaseId.RENDER_RESPONSE.equals(event.getPhaseId()))
@@ -86,7 +89,7 @@ public class MultiPageMessagesSupport implements PhaseListener
             iter.remove();
         }
  
-        if (messages.size() == 0)
+        if (messages.isEmpty())
         {
             return 0;
         }
